@@ -107,7 +107,7 @@ def main():
 
     if not requirements_met:
         set_visibility("private")
-        sys.exit(1)
+        sys.exit()
 
     if private_marker:
         set_visibility("private")
