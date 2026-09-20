@@ -1,12 +1,14 @@
 import os
 import sys
+import base64
 import requests
 
-REPO = os.environ["GITHUB_REPOSITORY"]
 TOKEN = os.environ["ADMIN_PAT"]
 
 print("PAT exists:", bool(TOKEN))
 print("PAT length:", len(TOKEN))
+
+ORG = "RequestTimeout"
 
 DEFAULT_LICENSE_URL = (
     "https://raw.githubusercontent.com/"
@@ -20,54 +22,78 @@ HEADERS = {
 }
 
 
-def check_readme():
-    if not os.path.isfile("README.md"):
-        return False, False
+def get_file(repo, path):
+    response = requests.get(
+        f"https://api.github.com/repos/{repo}/contents/{path}",
+        headers=HEADERS,
+        timeout=15,
+    )
 
-    with open("README.md", "r", encoding="utf-8") as file:
-        content = file.read()
+    if response.status_code == 404:
+        return None
 
-    return True, "__private__" in content
-
-
-def check_license():
-    if not os.path.isfile("LICENSE.md"):
-        return False
-
-    with open("LICENSE.md", "rb") as file:
-        local_license = file.read()
-
-    response = requests.get(DEFAULT_LICENSE_URL, timeout=15)
     response.raise_for_status()
 
-    return local_license == response.content
+    data = response.json()
+
+    if data.get("type") != "file":
+        return None
+
+    return base64.b64decode(data["content"])
 
 
-def check_codeowners():
+def check_readme(repo):
+    content = get_file(repo, "README.md")
+
+    if content is None:
+        return False, False
+
+    text = content.decode("utf-8")
+
+    return True, "__private__" in text
+
+
+def check_license(repo, default_license):
+    content = get_file(repo, "LICENSE.md")
+
+    if content is None:
+        return False
+
+    return content == default_license
+
+
+def check_codeowners(repo):
     paths = [
         "CODEOWNERS",
         ".github/CODEOWNERS",
         "docs/CODEOWNERS",
     ]
 
-    path = next((p for p in paths if os.path.isfile(p)), None)
+    content = None
 
-    if path is None:
+    for path in paths:
+        content = get_file(repo, path)
+
+        if content is not None:
+            break
+
+    if content is None:
         return False
 
     owners = set()
 
-    with open(path, "r", encoding="utf-8") as file:
-        for line in file:
-            line = line.strip()
+    text = content.decode("utf-8")
 
-            if not line or line.startswith("#"):
-                continue
+    for line in text.splitlines():
+        line = line.strip()
 
-            parts = line.split()
+        if not line or line.startswith("#"):
+            continue
 
-            if len(parts) >= 2:
-                owners.update(parts[1:])
+        parts = line.split()
+
+        if len(parts) >= 2:
+            owners.update(parts[1:])
 
     owners = {
         owner.lstrip("@").lower()
@@ -80,9 +106,9 @@ def check_codeowners():
     )
 
 
-def set_visibility(visibility):
+def set_visibility(repo, visibility):
     response = requests.patch(
-        f"https://api.github.com/repos/{REPO}",
+        f"https://api.github.com/repos/{repo}",
         headers=HEADERS,
         json={"visibility": visibility},
         timeout=15,
@@ -94,10 +120,47 @@ def set_visibility(visibility):
     response.raise_for_status()
 
 
-def main():
-    readme_exists, private_marker = check_readme()
-    license_valid = check_license()
-    codeowners_valid = check_codeowners()
+def get_repositories():
+    repositories = []
+    page = 1
+
+    while True:
+        response = requests.get(
+            f"https://api.github.com/orgs/{ORG}/repos",
+            headers=HEADERS,
+            params={
+                "per_page": 100,
+                "page": page,
+            },
+            timeout=15,
+        )
+
+        response.raise_for_status()
+
+        batch = response.json()
+
+        if not batch:
+            break
+
+        repositories.extend(batch)
+        page += 1
+
+    return repositories
+
+
+def check_repo(repo, default_license):
+    print()
+    print("=" * 60)
+    print(f"Checking {repo}")
+
+    readme_exists, private_marker = check_readme(repo)
+    license_valid = check_license(repo, default_license)
+    codeowners_valid = check_codeowners(repo)
+
+    print("README:", readme_exists)
+    print("LICENSE:", license_valid)
+    print("CODEOWNERS:", codeowners_valid)
+    print("__private__:", private_marker)
 
     requirements_met = (
         readme_exists
@@ -106,13 +169,36 @@ def main():
     )
 
     if not requirements_met:
-        set_visibility("private")
-        sys.exit()
+        print("Policy failed -> PRIVATE")
+        set_visibility(repo, "private")
+        return
 
     if private_marker:
-        set_visibility("private")
+        print("__private__ found -> PRIVATE")
+        set_visibility(repo, "private")
     else:
-        set_visibility("public")
+        print("Policy passed -> PUBLIC")
+        set_visibility(repo, "public")
+
+
+def main():
+    response = requests.get(
+        DEFAULT_LICENSE_URL,
+        timeout=15,
+    )
+    response.raise_for_status()
+
+    default_license = response.content
+
+    repositories = get_repositories()
+
+    print(f"Found {len(repositories)} repositories.")
+
+    for repository in repositories:
+        check_repo(
+            repository["full_name"],
+            default_license,
+        )
 
 
 if __name__ == "__main__":
