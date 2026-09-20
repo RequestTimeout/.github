@@ -1,2 +1,2 @@
 # RequestTimeout/.github
-This is the config file for the RequestTimeout organization.
+This is the config repository for the RequestTimeout organization.
