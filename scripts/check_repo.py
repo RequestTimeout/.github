@@ -5,6 +5,9 @@ import requests
 REPO = os.environ["GITHUB_REPOSITORY"]
 TOKEN = os.environ["ADMIN_PAT"]
 
+print("PAT exists:", bool(TOKEN))
+print("PAT length:", len(TOKEN))
+
 DEFAULT_LICENSE_URL = (
     "https://raw.githubusercontent.com/"
     "RequestTimeout/.github/main/profile/DEFAULT_LICENSE.md"
