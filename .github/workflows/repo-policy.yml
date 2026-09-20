@@ -25,4 +25,4 @@ jobs:
         env:
           ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: python ./scripts/check_repo.py
+        run: python scripts/check_repo.py
