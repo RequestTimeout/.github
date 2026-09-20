@@ -85,6 +85,9 @@ def set_visibility(visibility):
         timeout=15,
     )
 
+    print(response.status_code)
+    print(response.text)
+
     response.raise_for_status()
 
 
