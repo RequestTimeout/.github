@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="360" height="120" viewBox="0 0 360 120">
-  <rect width="360" height="120" rx="10" fill="#0d1117" stroke="#30363d"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 0 400 120">
+  <rect width="400" height="120" rx="10" fill="#0d1117" stroke="#30363d"/>
 
   <text x="24" y="30"
         fill="#f0f6fc"
@@ -7,7 +7,7 @@
         font-size="16"
         font-weight="700">Repositories:</text>
 
-  <line x1="24" y1="42" x2="336" y2="42"
+  <line x1="24" y1="42" x2="376" y2="42"
         stroke="#30363d"/>
 
   <text x="24" y="66"
@@ -22,16 +22,16 @@
         font-size="28"
         font-weight="700">10</text>
 
-  <line x1="180" y1="52" x2="180" y2="106"
+  <line x1="200" y1="52" x2="200" y2="106"
         stroke="#30363d"/>
 
-  <text x="204" y="66"
+  <text x="224" y="66"
         fill="#8b949e"
         font-family="Arial, sans-serif"
         font-size="14"
         font-weight="600">Private/in development</text>
 
-  <text x="204" y="98"
+  <text x="224" y="98"
         fill="#f0f6fc"
         font-family="Arial, sans-serif"
         font-size="28"
