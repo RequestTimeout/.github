@@ -9,10 +9,8 @@ print("PAT length:", len(TOKEN))
 
 ORG = "RequestTimeout"
 
-DEFAULT_LICENSE_URL = (
-    "https://raw.githubusercontent.com/"
-    "RequestTimeout/.github/main/profile/DEFAULT_LICENSE.md"
-)
+DEFAULT_LICENSE_URL = "https://raw.githubusercontent.com/" \
+                      "RequestTimeout/.github/main/profile/DEFAULT_LICENSE.md"
 
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}",
@@ -62,6 +60,8 @@ def check_license(repo, default_license):
 
 
 def set_visibility(repo, visibility):
+    print(f"Changing {repo} -> {visibility}")
+
     response = requests.patch(
         f"https://api.github.com/repos/{repo}",
         headers=HEADERS,
@@ -69,8 +69,9 @@ def set_visibility(repo, visibility):
         timeout=15,
     )
 
-    print("STATUS: ", response.status_code)
-    
+    print("STATUS:", response.status_code)
+    print("RESPONSE:", response.text)
+
     response.raise_for_status()
 
 
@@ -115,8 +116,8 @@ def check_repo(repo, default_license):
     print("__private__:", private_marker)
 
     requirements_met = (
-        readme_exists
-        and license_valid
+            readme_exists
+            and license_valid
     )
 
     if not requirements_met:
@@ -125,28 +126,37 @@ def check_repo(repo, default_license):
 
     if private_marker:
         set_visibility(repo, "private")
+        return
+
     else:
         set_visibility(repo, "public")
+        return
 
 
 def main():
+    print("1: starting main")
+
     response = requests.get(
         DEFAULT_LICENSE_URL,
         timeout=15,
     )
+    print("2: license downloaded:", response.status_code)
     response.raise_for_status()
 
     default_license = response.content
 
+    print("3: getting repositories")
     repositories = get_repositories()
 
-    print(f"Found {len(repositories)} repositories.")
-
+    print("4: Found", len(repositories), "repositories")
     for repository in repositories:
+        print("5: checking", repository["full_name"])
         check_repo(
             repository["full_name"],
             default_license,
         )
+
+    print("6: FINISHED")
 
 
 if __name__ == "__main__":
