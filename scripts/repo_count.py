@@ -80,7 +80,7 @@ response = requests.get(
 )
 
 data = {
-    "message": "Update repository stats",
+    "message": "Update repository count",
     "content": base64.b64encode(svg.encode()).decode(),
     "branch": "output"
 }
