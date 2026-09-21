@@ -70,7 +70,7 @@ def set_visibility(repo, visibility):
         timeout=15,
     )
 
-    print("STATUS: " + response.status_code)
+    print("STATUS: ", response.status_code)
     
     response.raise_for_status()
 
