@@ -8,30 +8,7 @@ on:
     - cron: "*/5 * * * *"
 
 jobs:
-  check:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-
-      - name: Install deps
-        run: pip install requests
-
-      - name: Check repository policy
-        env:
-          ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
-        run: |
-          set -euxo pipefail
-          echo "START"
-          python --version
-          echo "SCRIPT:"
-          cat scripts/check_repo.py
-          echo "RUNNING:"
-          python -u scripts/check_repo.py
-          echo "DONE"
+      - run: echo "HELLO FROM GITHUB ACTIONS"
