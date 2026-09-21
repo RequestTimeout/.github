@@ -1,6 +1,7 @@
 name: RequestTimeout Main Action File
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "*/5 * * * *" # Runs every 5 minutess
 
