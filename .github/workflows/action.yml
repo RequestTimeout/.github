@@ -24,4 +24,6 @@ jobs:
       - name: Run Python Scripts And Add Runtime Variables
         env:
           ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
-        run: python scripts/check_repo.py
+        run: |
+          python scripts/check_repo.py
+          python scripts/repo_count.py
