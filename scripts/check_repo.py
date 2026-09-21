@@ -1,7 +1,4 @@
-print("SCRIPT STARTED")
-
 import os
-import sys
 import base64
 import requests
 
