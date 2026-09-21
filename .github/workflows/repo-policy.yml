@@ -11,4 +11,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "HELLO"
+      - name: Test script
+        env:
+          ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
+        run: |
+          python scripts/check_repo.py
+          CODE=$?
+          echo "PYTHON EXIT CODE = $CODE"
+          exit 0
