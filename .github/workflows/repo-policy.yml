@@ -27,10 +27,11 @@ jobs:
         env:
           ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
         run: |
-          set -x
+          set -euxo pipefail
+          echo "START"
           python --version
-          which python
-          pwd
-          ls -la
-          ls -la scripts
+          echo "SCRIPT:"
+          cat scripts/check_repo.py
+          echo "RUNNING:"
           python -u scripts/check_repo.py
+          echo "DONE"
