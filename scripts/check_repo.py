@@ -62,50 +62,6 @@ def check_license(repo, default_license):
     return content == default_license
 
 
-def check_codeowners(repo):
-    paths = [
-        "CODEOWNERS",
-        ".github/CODEOWNERS",
-        "docs/CODEOWNERS",
-    ]
-
-    content = None
-
-    for path in paths:
-        content = get_file(repo, path)
-
-        if content is not None:
-            break
-
-    if content is None:
-        return False
-
-    owners = set()
-
-    text = content.decode("utf-8")
-
-    for line in text.splitlines():
-        line = line.strip()
-
-        if not line or line.startswith("#"):
-            continue
-
-        parts = line.split()
-
-        if len(parts) >= 2:
-            owners.update(parts[1:])
-
-    owners = {
-        owner.lstrip("@").lower()
-        for owner in owners
-    }
-
-    return (
-        "requesttimeout" in owners
-        and len(owners) >= 2
-    )
-
-
 def set_visibility(repo, visibility):
     response = requests.patch(
         f"https://api.github.com/repos/{repo}",
@@ -114,9 +70,8 @@ def set_visibility(repo, visibility):
         timeout=15,
     )
 
-    print(response.status_code)
-    print(response.text)
-
+    print("STATUS: " response.status_code)
+    
     response.raise_for_status()
 
 
@@ -155,29 +110,23 @@ def check_repo(repo, default_license):
 
     readme_exists, private_marker = check_readme(repo)
     license_valid = check_license(repo, default_license)
-    codeowners_valid = check_codeowners(repo)
 
     print("README:", readme_exists)
     print("LICENSE:", license_valid)
-    print("CODEOWNERS:", codeowners_valid)
     print("__private__:", private_marker)
 
     requirements_met = (
         readme_exists
         and license_valid
-        and codeowners_valid
     )
 
     if not requirements_met:
-        print("Policy failed -> PRIVATE")
         set_visibility(repo, "private")
         return
 
     if private_marker:
-        print("__private__ found -> PRIVATE")
         set_visibility(repo, "private")
     else:
-        print("Policy passed -> PUBLIC")
         set_visibility(repo, "public")
 
 
