@@ -27,5 +27,10 @@ jobs:
         env:
           ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
         run: |
+          set -x
           python --version
+          which python
+          pwd
+          ls -la
+          ls -la scripts
           python -u scripts/check_repo.py
