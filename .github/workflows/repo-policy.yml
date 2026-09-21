@@ -27,9 +27,5 @@ jobs:
         env:
           ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
         run: |
-          pwd
-          ls -la
-          ls -la .github
-          ls -la .github/scripts
           python --version
-          python scripts/check_repo.py
+          python -u scripts/check_repo.py
