@@ -32,4 +32,4 @@ jobs:
           ls -la .github
           ls -la .github/scripts
           python --version
-          python .github/scripts/check_repo.py
+          python scripts/check_repo.py
