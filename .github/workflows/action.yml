@@ -1,0 +1,26 @@
+name: RequestTimeout Main Action File
+
+on:
+  schedule:
+    - cron: "*/5 * * * *" # Runs every 5 minutess
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Run Python Scripts And Add Runtime Variables
+        env:
+          ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
+        run: python scripts/check_repo.py
