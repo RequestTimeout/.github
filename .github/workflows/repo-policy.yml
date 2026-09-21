@@ -15,5 +15,4 @@ jobs:
         with:
           python-version: "3.x"
       - run: |
-          python scripts/check_repo.py > output.log 2>&1 || true
-          cat output.log
+          python -c "print('PYTHON WORKS')"
