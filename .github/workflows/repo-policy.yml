@@ -26,4 +26,10 @@ jobs:
       - name: Check repository policy
         env:
           ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
-        run: python scripts/check_repo.py
+        run: |
+          pwd
+          ls -la
+          ls -la .github
+          ls -la .github/scripts
+          python --version
+          python .github/scripts/check_repo.py
