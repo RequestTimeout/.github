@@ -26,4 +26,4 @@ jobs:
           ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
         run: |
           python scripts/check_repo.py
-          python --version
+          python scripts/repo_count.py
