@@ -8,12 +8,12 @@ We build software, developer tools, experiments, and other projects that seemed 
 Request Timeout currently focuses on:
 | What We Use | For |
 |--|--|
-| Python | 99% Of Our Projects |
-| Java | Minecraft Stuff |
+| Python | 99% of our Projects |
+| Java | Minecraft stuff |
 | Minecraft | When We Are Tired |
-| HTML | Web Stuff |
+| HTML | Web stuff |
 | CSS | Better HTML |
-| JS | Better HTML and CSS |
+| JavaScript | Better HTML and CSS |
 
 ---
 ### What we make
