@@ -6,10 +6,17 @@ We build software, developer tools, experiments, and other projects that seemed 
 ---
 ## What we work with
 Request Timeout currently focuses on:
+| What We Use | For |
+|--|--|
+| Python | 99% Of Our Projects |
+| Java | Minecraft Stuff |
+| Minecraft | When We Are Tired |
+| HTML | Web Stuff |
+| CSS | Better HTML |
+| JS | Better HTML and CSS |
 
-* Python
-* Java
-* Minecraft
+---
+### What we make
 * Minecraft modding
 * Developer tools
 * Command-line applications
@@ -17,18 +24,6 @@ Request Timeout currently focuses on:
 * Experiments
 
 We are interested in learning new technologies and building things that solve problems, including problems that we accidentally created ourselves.
-
----
-## Projects
-Our projects range from small experiments to tools intended to be genuinely useful.
-### modID
-A Minecraft modding environment inspector.
-
-`modID` scans a Minecraft directory and provides information about installed mods and the surrounding modding environment.
-
-[Inspect the project here.](https://github.com/RequestTimeout/modID)
-
-More projects may appear without warning.
 
 ---
 ## Contributing
@@ -50,6 +45,9 @@ We are especially interested in people with experience in:
 * Finding problems before they become much larger problems
 
 You can contribute by reporting bugs, suggesting improvements, opening issues, submitting pull requests, or helping improve existing projects.
+
+---
+<img alt="" src="https://raw.githubusercontent.com/RequestTimeout/.github/output/repos.svg"/>
 
 ---
 ## Security
@@ -80,3 +78,9 @@ If everything appears to be working correctly, please check again.
 **And as always, don't click random links.**
 
 [Main RequestTimeout GitHub Page.](https://github.com/RequestTimeout)
+
+<div align="center">
+  <sub>Made With Care By <a href="https://github.com/RequestTimeout">@RequestTimeout</a></sub>
+  <br>
+  <sub>© 2026 <a href="https://github.com/RequestTimeout" target="_blank">@RequestTimeout</a> — All Rights Reserved</sub>
+</div>
