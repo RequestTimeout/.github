@@ -5,7 +5,6 @@ We build software, developer tools, experiments, and other projects that seemed 
 
 ---
 ## What we work with
-Request Timeout currently focuses on:
 | What We Use | For |
 |--|--|
 | Python | 99% of our Projects |
