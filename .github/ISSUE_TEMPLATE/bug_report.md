@@ -1,8 +1,9 @@
 ---
 name: Bug report
 about: Report something that isn't working
-title: "[BUG]"
-labels: bug-report
+title: "Bug report"
+type: bug
+labels: bug
 ---
 
 ## What happened?
