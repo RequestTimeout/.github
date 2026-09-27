@@ -1,1 +1,6 @@
 blank_issues_enabled: false
+
+contact_links:
+  - name: RequestTimeout Telegram
+    url: https://t.me/+aFVApm-_xFtlYmE0
+    about: The RequestTimeout telegram group for people to ask questions.
