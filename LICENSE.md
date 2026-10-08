@@ -1,6 +1,6 @@
 # All Rights Reserved
 
-Copyright (c) 2026 [Request Timeout](https://github.com/RequestTimeout)
+Copyright (c) YEAR [Request Timeout](https://github.com/RequestTimeout)
 
 All rights reserved.
 
