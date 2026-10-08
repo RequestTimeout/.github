@@ -3,21 +3,13 @@ import base64
 import requests
 
 TOKEN = os.environ["ADMIN_PAT"]
-
-print("PAT exists:", bool(TOKEN))
-print("PAT length:", len(TOKEN))
-
 ORG = "RequestTimeout"
-
-DEFAULT_LICENSE_URL = "https://raw.githubusercontent.com/" \
-                      "RequestTimeout/.github/main/profile/DEFAULT_LICENSE.md"
-
+DEFAULT_LICENSE_URL = "https://raw.githubusercontent.com/RequestTimeout/.github/main/profile/DEFAULT_LICENSE.md"
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}",
     "Accept": "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
 }
-
 
 def get_file(repo, path):
     response = requests.get(
@@ -30,12 +22,9 @@ def get_file(repo, path):
         return None
 
     response.raise_for_status()
-
     data = response.json()
-
     if data.get("type") != "file":
         return None
-
     return base64.b64decode(data["content"])
 
 
@@ -70,8 +59,6 @@ def set_visibility(repo, visibility):
     )
 
     print("STATUS:", response.status_code)
-    print("RESPONSE:", response.text)
-
     response.raise_for_status()
 
 
@@ -91,9 +78,7 @@ def get_repositories():
         )
 
         response.raise_for_status()
-
         batch = response.json()
-
         if not batch:
             break
 
@@ -114,12 +99,10 @@ def check_repo(repo, default_license):
     print("README:", readme_exists)
     print("LICENSE:", license_valid)
     print("__private__:", private_marker)
-
     requirements_met = (
             readme_exists
             and license_valid
     )
-
     if not requirements_met:
         set_visibility(repo, "private")
         return
@@ -134,29 +117,18 @@ def check_repo(repo, default_license):
 
 
 def main():
-    print("1: starting main")
-
     response = requests.get(
         DEFAULT_LICENSE_URL,
         timeout=15,
     )
-    print("2: license downloaded:", response.status_code)
     response.raise_for_status()
-
     default_license = response.content
-
-    print("3: getting repositories")
     repositories = get_repositories()
-
-    print("4: Found", len(repositories), "repositories")
     for repository in repositories:
-        print("5: checking", repository["full_name"])
         check_repo(
             repository["full_name"],
             default_license,
         )
-
-    print("6: FINISHED")
 
 
 if __name__ == "__main__":
