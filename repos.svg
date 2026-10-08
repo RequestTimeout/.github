@@ -20,7 +20,7 @@
         fill="#f0f6fc"
         font-family="Arial, sans-serif"
         font-size="28"
-        font-weight="700">7</text>
+        font-weight="700">12</text>
 
   <line x1="200" y1="52" x2="200" y2="106"
         stroke="#30363d"/>
@@ -35,5 +35,5 @@
         fill="#f0f6fc"
         font-family="Arial, sans-serif"
         font-size="28"
-        font-weight="700">7</text>
+        font-weight="700">2</text>
 </svg>
