@@ -3,7 +3,7 @@ name: Bug report
 about: Report something that isn't working
 title: "Bug report"
 type: bug
-labels: bug
+labels: [bug, help-me]
 ---
 
 ## What happened?
