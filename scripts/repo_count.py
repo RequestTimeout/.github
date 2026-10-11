@@ -7,8 +7,7 @@ HEADERS = {
     "Accept": "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
 }
-private = 0
-public = 0
+public, public = 0, 0
 page = 1
 
 while True:
@@ -27,11 +26,14 @@ while True:
         break
     for repo in repos:
         if repo["private"]:
+            print("Found 1 private repo... adding 1 to private count")
             private += 1
         else:
+            print("Found 1 public repo... adding 1 to public count")
             public += 1
     page += 1
 
+print("Creating SVG code...")
 svg = \
 f"""<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 0 400 120">
   <rect width="400" height="120" rx="10" fill="#0d1117" stroke="#30363d"/>
@@ -72,6 +74,7 @@ f"""<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 
         font-size="28"
         font-weight="700">{private}</text>
 </svg>"""
+print("Done creating SVG code.")
 response = requests.get(
     "https://api.github.com/repos/RequestTimeout/.github/contents/repos.svg",
     headers=HEADERS,
@@ -94,3 +97,4 @@ response = requests.put(
 )
 
 response.raise_for_status()
+print("Done")
