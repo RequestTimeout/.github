@@ -1,4 +1,4 @@
-name: RequestTimeout Main Action File
+name: Main Action File
 
 on:
   workflow_dispatch:
