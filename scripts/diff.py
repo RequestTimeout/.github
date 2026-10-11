@@ -58,7 +58,7 @@ while True:
 path = "repos.md"
 
 response = requests.get(
-    f"https://api.github.com/repos/RequestTimeout/.github/contents/{path}",
+    f"https://api.github.com/repos/RequestTimeout/docs/contents/{path}",
     headers=HEADERS,
     params={"ref": "main"},
     timeout=15
@@ -76,7 +76,7 @@ else:
     response.raise_for_status() if response.status_code != 404 else None
 
 response = requests.put(
-    f"https://api.github.com/repos/RequestTimeout/.github/contents/{path}",
+    f"https://api.github.com/repos/RequestTimeout/docs/contents/{path}",
     headers=HEADERS,
     json=data,
     timeout=30
