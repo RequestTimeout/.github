@@ -1,7 +1,6 @@
 import os, requests, base64
 
 TOKEN = os.environ['ADMIN_PAT']
-
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}",
     "Accept": "application/vnd.github+json",
@@ -30,11 +29,13 @@ while True:
 
     for repo in repos:
         if repo["private"]:
+            print("Found private repo, jumping to next repo...")
             continue
 
         name = repo["name"]
         branch = repo["default_branch"]
 
+        print(f"Fetching diff for repo: {name}...")
         diff_response = requests.get(
             f"https://api.github.com/repos/RequestTimeout/{name}/commits/{branch}",
             headers={
@@ -51,6 +52,7 @@ while True:
         if not diff:
             continue
 
+        print(f"Adding repo {name} to output...")
         output += f"# {name}\n```diff\n{diff}\n```\n"
 
     page += 1
