@@ -25,6 +25,7 @@ jobs:
         env:
           ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
         run: |
+          echo "$(printf '=%.0s' {1..100})"
           python scripts/check_repo.py
           echo "$(printf '=%.0s' {1..100})"
           python scripts/repo_count.py
