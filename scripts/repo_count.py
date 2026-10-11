@@ -7,7 +7,7 @@ HEADERS = {
     "Accept": "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
 }
-public, public = 0, 0
+public, private = 0, 0
 page = 1
 
 while True:
