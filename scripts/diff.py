@@ -8,7 +8,7 @@ HEADERS = {
 }
 
 page = 1
-output = ""
+output = "> [!IMPORTANT]\n> Some repositories are excluded from this list\n\n"
 
 while True:
     response = requests.get(
@@ -52,6 +52,8 @@ while True:
         if not diff:
             continue
 
+        if name in ["docs"]:
+            continue
         print(f"Adding repo {name} to output...")
         output += f"# {name}\n```diff\n{diff}\n```\n"
 
