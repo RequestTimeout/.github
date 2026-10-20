@@ -35,6 +35,8 @@ while True:
         name = repo["name"]
         branch = repo["default_branch"]
 
+        if name in ["docs"]:
+            continue
         print(f"Fetching diff for repo: {name}...")
         diff_response = requests.get(
             f"https://api.github.com/repos/RequestTimeout/{name}/commits/{branch}",
@@ -52,8 +54,6 @@ while True:
         if not diff:
             continue
 
-        if name in ["docs"]:
-            continue
         print(f"Adding repo {name} to output...")
         output += f"# {name}\n```diff\n{diff}\n```\n"
 
